@@ -5,6 +5,7 @@ using UnityEngine;
 public class OnOffSwitch : MonoBehaviour
 {
     [SerializeField] private GameObject UIOutside;
+    [SerializeField] private GameObject UIUnderground;
 
     private string mode = "outside";
     private string oldMode = "underground";
@@ -46,10 +47,12 @@ public class OnOffSwitch : MonoBehaviour
                     .ForEach(s => s.color = new Color(1f, 1f, 1f, 0));
                 if (mode == "underground")
                 {
-                    UIOutside.SetActive(true);
+                    UIOutside.SetActive(false);
+                    UIUnderground.SetActive(true);
                 } else
                 {
-                    UIOutside.SetActive(false);
+                    UIOutside.SetActive(true);
+                    UIUnderground.SetActive(false);
                 }
             }
         }
