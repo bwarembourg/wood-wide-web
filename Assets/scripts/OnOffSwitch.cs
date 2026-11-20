@@ -37,7 +37,6 @@ public class OnOffSwitch : MonoBehaviour
         if (transitioning)
         {
             srs.ForEach(s => s.color = new Color(1f, 1f, 1f, s.color.a + Time.deltaTime * speed));
-            Debug.Log("transitioning" + srs[0].color.a);
             if ((srs[0].color.a <= targetAlpha && mode == "underground") || (srs[0].color.a >= targetAlpha && mode == "outside"))
             {
                 srs.ForEach(s => s.color = new Color(1f, 1f, 1f, targetAlpha));

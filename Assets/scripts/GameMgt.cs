@@ -29,9 +29,7 @@ public class GameMgt : MonoBehaviour
 
     public void UpdateAllTiles()
     {
-        Debug.Log("Update alive tiles");
         List<Tile> aliveTiles = Utils.current.GetAllAliveTiles();
-        Debug.Log(aliveTiles.Count + " tiles alives");
         aliveTiles.ForEach(tile => tile.UpdateIsConnected());
     }
 

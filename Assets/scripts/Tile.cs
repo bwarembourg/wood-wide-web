@@ -45,7 +45,6 @@ public class Tile : MonoBehaviour
         path.SetBool("on", ps.connected);
         if (ps.connected)
         {
-            Debug.Log("CONNECTED !!!!");
         }
     }
 
@@ -77,6 +76,7 @@ public class Tile : MonoBehaviour
         icon.gameObject.SetActive(true);
         BuildCross();
         mushroom.gameObject.SetActive(true);
+        Score.current.addShroom();
     }
 
     public void BuildTree()
@@ -86,6 +86,7 @@ public class Tile : MonoBehaviour
         icon.gameObject.SetActive(true);
         BuildCross();
         tree.gameObject.SetActive(true);
+        Score.current.addTree();
     }
 
     private void BuildCross()
