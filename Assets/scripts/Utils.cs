@@ -26,7 +26,7 @@ public class Utils : MonoBehaviour
     public Tile GetRandomEmptyTiles(Vector3 position, float distance)
     {
         List<Tile> tiles = GetAllEmptyTiles();
-        List<Tile> distanceTiles = tiles.FindAll(t => Vector3.Distance(position, t.transform.position) <= distance);
+        List<Tile> distanceTiles = tiles.FindAll(t => Vector3.Distance(position, t.transform.position) >= distance);
         Tile tile = null;
         if (distanceTiles.Count > 0)
         {

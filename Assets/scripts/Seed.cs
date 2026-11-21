@@ -7,6 +7,7 @@ public class Seed : MonoBehaviour
     private Tree tree;
     private bool generating;
     private Vector2 dest;
+    private Tile tile;
 
     private bool harvesting;
 
@@ -33,25 +34,26 @@ public class Seed : MonoBehaviour
 
     private void OnMouseDown()
     {
-        if (OnOffSwitch.current.mode == "outside")
+        if (OnOffSwitch.current.mode == "outside" && !generating)
         {
             Destroy(gameObject);
             tree.InitConnected();
-            // Plant Tree
+            tile.BuildGrowingTree();
         }
     }
 
     public void Init(Tree newTree)
     {
         tree = newTree;
-        Tile tile = Utils.current.GetRandomEmptyTiles(tree.transform.position, 4f);
-        if (tile == null)
+        Tile destTile = Utils.current.GetRandomEmptyTiles(tree.transform.position, 6f);
+        if (destTile == null)
         {
             Destroy(gameObject);
             tree.InitConnected();
             return;
         }
-        dest = tile.transform.position;
+        tile = destTile;
+        dest = destTile.transform.position;
         generating = true;
         if (OnOffSwitch.current.mode == "underground")
         {

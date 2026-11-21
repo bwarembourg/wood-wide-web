@@ -1,10 +1,14 @@
 using System.Collections;
 using System.Collections.Generic;
+using System.Linq;
 using UnityEngine;
 
 public class GameMgt : MonoBehaviour
 {
     public static GameMgt current;
+
+    [SerializeField] Tile mushroomStartTile;
+    [SerializeField] Tile treeStartTile;
 
     public GameMgt()
     {
@@ -13,17 +17,8 @@ public class GameMgt : MonoBehaviour
     // Start is called before the first frame update
     void Start()
     {
-        Utils.current.getAllTiles().ForEach(tile =>
-        {
-            if (Vector2.Distance(tile.transform.position, new Vector2(3f, 2f)) < 1f)
-            {
-                tile.BuildTree();
-            }
-            if (Vector2.Distance(tile.transform.position, new Vector2(1f, 3f)) < 0.75f)
-            {
-                tile.BuildMushRoom();
-            }
-        });
+        mushroomStartTile.BuildMushRoom();
+        treeStartTile.BuildTree();
         UpdateAllTiles();
     }
 
@@ -31,6 +26,16 @@ public class GameMgt : MonoBehaviour
     {
         List<Tile> aliveTiles = Utils.current.GetAllAliveTiles();
         aliveTiles.ForEach(tile => tile.UpdateIsConnected());
+        GameObject[] gos = GameObject.FindGameObjectsWithTag("underground");
+        float time = gos[1].GetComponent<Animator>().GetCurrentAnimatorStateInfo(0).normalizedTime;
+        List<GameObject> gosFiltered = gos.ToList()
+            .FindAll(g => g.GetComponent<Animator>() != null);
+        gosFiltered
+            .ForEach(g => {
+                AnimatorStateInfo currentState = g.GetComponent<Animator>().GetCurrentAnimatorStateInfo(0);
+                g.GetComponent<Animator>().Play(currentState.fullPathHash, 0, 0f);
+                g.GetComponent<Animator>().Update(time);
+            });
     }
 
     // Update is called once per frame

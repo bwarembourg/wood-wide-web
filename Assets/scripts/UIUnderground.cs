@@ -4,6 +4,8 @@ using UnityEngine;
 
 public class UIUnderground : MonoBehaviour
 {
+    [SerializeField] Cancel cancel;
+
     public static UIUnderground current;
 
     public UIUnderground() { current = this; }
@@ -18,6 +20,7 @@ public class UIUnderground : MonoBehaviour
     public void SetSelected(NewPath np)
     {
         selectedPath = np;
+        cancel.gameObject.SetActive(true);
     }
 
     public bool hasSelected()
@@ -38,5 +41,6 @@ public class UIUnderground : MonoBehaviour
         {
             np.Reset();
         }
+        cancel.gameObject.SetActive(false);
     }
 }

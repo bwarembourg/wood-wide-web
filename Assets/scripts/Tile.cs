@@ -11,6 +11,8 @@ public class Tile : MonoBehaviour
     [SerializeField] private Animator tree;
     [SerializeField] private Animator mushroom;
     [SerializeField] private ProgressBar progressBar;
+    [SerializeField] private Animator hover;
+    [SerializeField] private GameObject hoverIcon;
 
     public float x;
     public float y;
@@ -59,12 +61,57 @@ public class Tile : MonoBehaviour
 
     private void OnMouseDown()
     {
+        if (isMushroom || isTree)
+            return;
         BuildPath();
+    }
+
+    private void OnMouseOver()
+    {
+        NewPath selected = UIUnderground.current.GetSelected();
+        if (selected != null)
+        {
+            if (Input.GetMouseButtonDown(1))
+            {
+                // CLIC DROIT
+                selected.Rotate();
+                hover.GetComponent<Transform>().rotation = selected.GetRotation();
+                return;
+            }
+        }
+    }
+
+    private void OnMouseEnter()
+    {
+        if (isMushroom || isTree)
+            return;
+        NewPath selected = UIUnderground.current.GetSelected();
+        if (selected != null)
+        {
+            hover.gameObject.SetActive(true);
+            if (selected.type == "mushroom")
+            {
+                hover.SetTrigger("cross");
+                hoverIcon.SetActive(true);
+            }
+            else
+            {
+
+                hover.SetTrigger(selected.type);
+            }
+            hover.GetComponent<Transform>().rotation = selected.GetRotation();
+        }
+    }
+
+    private void OnMouseExit()
+    {
+        hover.SetTrigger("reset");
+        hover.gameObject.SetActive(false);
+        hoverIcon.SetActive(false);
     }
 
     public void BuildPath()
     {
-        Debug.Log("build path");
         NewPath selected = UIUnderground.current.GetSelected();
         if (selected != null)
         {
@@ -74,6 +121,7 @@ public class Tile : MonoBehaviour
                 path.SetTrigger("cross");
             } else
             {
+
                 path.SetTrigger(selected.type);
             }
             path.GetComponent<Transform>().rotation = selected.GetRotation();
@@ -81,12 +129,13 @@ public class Tile : MonoBehaviour
             conLeft = selected.conLeft;
             conTop = selected.conTop;
             conBottom = selected.conBottom;
-            GameMgt.current.UpdateAllTiles();
             UIUnderground.current.Reset();
             if (selected.type == "mushroom")
             {
                 BuildMushRoom();
             }
+            GameMgt.current.UpdateAllTiles();
+            GameMgt.current.UpdateAllTiles();
         } 
     }
 
@@ -105,6 +154,7 @@ public class Tile : MonoBehaviour
             treeSr.color = new Color(1f, 1f, 1f, OnOffSwitch.current.targetAlpha);
             progressBar.UpdateUnderground();
         }
+        path.SetTrigger("cross");
     }
 
     public void BuildTree()
@@ -112,8 +162,27 @@ public class Tile : MonoBehaviour
         isTree = true;
         icon.sprite = treeIconSprite;
         icon.gameObject.SetActive(true);
+        tree.gameObject.SetActive(true);
+        tree.SetTrigger("grown");
+        Score.current.addTree();
+        BuildCross();
+        if (OnOffSwitch.current.mode == "underground")
+        {
+            SpriteRenderer shroomSr = mushroom.GetComponent<SpriteRenderer>();
+            shroomSr.color = new Color(1f, 1f, 1f, OnOffSwitch.current.targetAlpha);
+            progressBar.UpdateUnderground();
+        }
+        path.SetTrigger("cross");
+    }
+
+    public void BuildGrowingTree()
+    {
+        isTree = true;
+        icon.sprite = treeIconSprite;
+        icon.gameObject.SetActive(true);
         BuildCross();
         tree.gameObject.SetActive(true);
+        tree.GetComponent<Tree>().InitGrowing();
         Score.current.addTree();
         if (OnOffSwitch.current.mode == "underground")
         {

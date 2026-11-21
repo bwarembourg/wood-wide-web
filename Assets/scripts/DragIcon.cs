@@ -41,7 +41,6 @@ public class DragIcon : MonoBehaviour
         if (type == "path")
         {
             int rand = Random.Range(0, 5);
-            Debug.Log(rand);
             if (rand < 2)
             {
                 sr.sprite = line;

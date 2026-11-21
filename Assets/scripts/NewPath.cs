@@ -59,6 +59,16 @@ public class NewPath : MonoBehaviour
         UIUnderground.current.SetSelected(this);
     }
 
+    public void Rotate()
+    {
+        Debug.Log("rotate");
+        path.Rotate(0, 0, 90f);
+        UpdateConnexions();
+        if (UIUnderground.current.hasSelected())
+        {
+            UIUnderground.current.SetSelected(this);
+        }
+    }
 
     private void OnMouseOver()
     {
@@ -67,8 +77,7 @@ public class NewPath : MonoBehaviour
         if (Input.GetMouseButtonDown(1))
         {
             // CLIC DROIT
-            path.Rotate(0, 0, 90f);
-            UpdateConnexions();
+            Rotate();
             return;
         }
 

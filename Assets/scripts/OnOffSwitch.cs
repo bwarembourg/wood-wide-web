@@ -104,7 +104,7 @@ public class OnOffSwitch : MonoBehaviour
 
     private void SwitchToOutside()
     {
-        speed = 2f;
+        speed = 4f;
         targetAlpha = 1f;
         mode = "outside";
         oldMode = "underground";
@@ -113,7 +113,7 @@ public class OnOffSwitch : MonoBehaviour
 
     private void SwitchToUnderground()
     {
-        speed = -2f;
+        speed = -4f;
         targetAlpha = 0.4f;
         mode = "underground";
         oldMode = "outside";
