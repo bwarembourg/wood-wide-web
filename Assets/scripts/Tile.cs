@@ -22,6 +22,7 @@ public class Tile : MonoBehaviour
     public bool conBottom;
     public bool isMushroom;
     public bool isTree;
+    public bool isSeed;
 
     public bool isConnected;
 
@@ -44,6 +45,16 @@ public class Tile : MonoBehaviour
         PathState ps = IsConnected(new PathState(false, false, false));
         isConnected = ps.connected;
         path.SetBool("on", ps.connected);
+        if (isTree && isConnected)
+        {
+            tree.GetComponent<Tree>().InitConnected();
+            if (OnOffSwitch.current.mode == "underground")
+            {
+                SpriteRenderer treeSr = tree.GetComponent<SpriteRenderer>();
+                treeSr.color = new Color(1f, 1f, 1f, OnOffSwitch.current.targetAlpha);
+                progressBar.UpdateUnderground();
+            }
+        }
     }
 
     private void OnMouseDown()
@@ -53,6 +64,7 @@ public class Tile : MonoBehaviour
 
     public void BuildPath()
     {
+        Debug.Log("build path");
         NewPath selected = UIUnderground.current.GetSelected();
         if (selected != null)
         {
@@ -89,8 +101,8 @@ public class Tile : MonoBehaviour
         Score.current.addShroom();
         if (OnOffSwitch.current.mode == "underground")
         {
-            SpriteRenderer shroomSr = mushroom.GetComponent<SpriteRenderer>();
-            shroomSr.color = new Color(1f, 1f, 1f, OnOffSwitch.current.targetAlpha);
+            SpriteRenderer treeSr = tree.GetComponent<SpriteRenderer>();
+            treeSr.color = new Color(1f, 1f, 1f, OnOffSwitch.current.targetAlpha);
             progressBar.UpdateUnderground();
         }
     }
@@ -103,6 +115,12 @@ public class Tile : MonoBehaviour
         BuildCross();
         tree.gameObject.SetActive(true);
         Score.current.addTree();
+        if (OnOffSwitch.current.mode == "underground")
+        {
+            SpriteRenderer shroomSr = mushroom.GetComponent<SpriteRenderer>();
+            shroomSr.color = new Color(1f, 1f, 1f, OnOffSwitch.current.targetAlpha);
+            progressBar.UpdateUnderground();
+        }
     }
 
     private void BuildCross()

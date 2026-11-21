@@ -57,6 +57,7 @@ public class OnOffSwitch : MonoBehaviour
                     SetLabel("UNDERGROUND");
                     icon.sprite = iconUnder;
                     panel.sprite = panelUnder;
+                    Utils.current.getAllTiles().ForEach(t => t.GetComponent<BoxCollider2D>().enabled = true);
                 } else
                 {
                     UIOutside.SetActive(true);
@@ -64,6 +65,7 @@ public class OnOffSwitch : MonoBehaviour
                     SetLabel("OUTSIDE");
                     icon.sprite = iconOut;
                     panel.sprite = panelOut;
+                    Utils.current.getAllTiles().ForEach(t => t.GetComponent<BoxCollider2D>().enabled = false);
                 }
             }
         }

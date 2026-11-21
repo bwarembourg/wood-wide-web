@@ -11,7 +11,6 @@ public class Spore : MonoBehaviour
     private Vector2 dest;
 
     private bool harvesting;
-    private
 
     // Start is called before the first frame update
     void Start()
