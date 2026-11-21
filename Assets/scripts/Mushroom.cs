@@ -1,0 +1,43 @@
+using System.Collections;
+using System.Collections.Generic;
+using UnityEngine;
+
+public class Mushroom : MonoBehaviour
+{
+    [SerializeField] ProgressBar progressBar;
+    [SerializeField] float max;
+    [SerializeField] Spore sporePrefab;
+
+    private bool working;
+    private float timer;
+  
+    // Start is called before the first frame update
+    void Start()
+    {
+        
+    }
+
+    // Update is called once per frame
+    void Update()
+    {
+        if (working)
+        {
+            timer += Time.deltaTime;
+            progressBar.UpdateProgressBar(timer, max);
+            if (timer >= max)
+            {
+                timer = 0;
+                progressBar.gameObject.SetActive(false);
+                working = false;
+                Spore spore = Instantiate(sporePrefab, transform.position - new Vector3(0, 0.25f, 0), Quaternion.identity, transform);
+                spore.Init(this);
+            }
+        }
+    }
+
+    public void Init()
+    {
+        working = true;
+        progressBar.gameObject.SetActive(true);
+    }
+}

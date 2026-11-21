@@ -8,6 +8,11 @@ TagManager:
   - underground
   - undergroundtile
   - outsidetile
+  - sporedest
+  - iconturn
+  - iconline
+  - iconcross
+  - iconshroom
   layers:
   - Default
   - TransparentFX
@@ -47,4 +52,7 @@ TagManager:
     locked: 0
   - name: Default
     uniqueID: 0
+    locked: 0
+  - name: below
+    uniqueID: 3605540577
     locked: 0

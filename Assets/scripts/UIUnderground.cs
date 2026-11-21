@@ -10,6 +10,11 @@ public class UIUnderground : MonoBehaviour
 
     private NewPath selectedPath = null;
 
+    private void Start()
+    {
+        Font.current.WriteLine("BUY :", -2.5f+1f/16f, 2.5f, transform);
+    }
+
     public void SetSelected(NewPath np)
     {
         selectedPath = np;

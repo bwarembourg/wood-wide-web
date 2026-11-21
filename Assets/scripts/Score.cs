@@ -6,9 +6,12 @@ public class Score : MonoBehaviour
 {
     public static Score current;
 
-    private List<SpriteRenderer> shroomCounterTxt;
-    private List<SpriteRenderer> treeCounterTxt;
-    private List<SpriteRenderer> sporeCounterTxt;
+    [SerializeField] Transform underUI;
+
+    private List<SpriteRenderer> shroomCounterTxt = new List<SpriteRenderer>();
+    private List<SpriteRenderer> treeCounterTxt = new List<SpriteRenderer>();
+    private List<SpriteRenderer> sporeCounterTxt = new List<SpriteRenderer>();
+    private List<SpriteRenderer> underSporeCounterTxt = new List<SpriteRenderer>();
 
     private int shroomCounter;
     private int treeCounter;
@@ -22,10 +25,9 @@ public class Score : MonoBehaviour
     // Start is called before the first frame update
     void Start()
     {
-        shroomCounterTxt = Font.current.WriteLine("000", -2f + 0.375f, 0.75f+0.125f, transform);
-        treeCounterTxt = Font.current.WriteLine("000", 1f-0.5f, 0.75f+0.125f, transform);
-        sporeCounterTxt = Font.current.WriteLine("0000", -2f+0.375f, -0.5f+0.25f, transform);
-
+        UpdateShroomCounterTxt();
+        UpdateTreeCounterTxt();
+        UpdateSporeCounterTxt();
     }
 
     // Update is called once per frame
@@ -70,6 +72,19 @@ public class Score : MonoBehaviour
     {
         sporeCounterTxt.ForEach(f => Destroy(f.gameObject));
         sporeCounterTxt.Clear();
+        underSporeCounterTxt.ForEach(f => Destroy(f.gameObject));
+        underSporeCounterTxt.Clear();
         sporeCounterTxt = Font.current.WriteLine(sporeCounter.ToString().PadLeft(4, '0'), -2f + 0.375f, -0.5f + 0.25f, transform);
+        underSporeCounterTxt = Font.current.WriteLine(sporeCounter.ToString().PadLeft(4, '0'), -0.5f, 3.25f, underUI);
+        ShopItem[] shops = FindObjectsOfType<ShopItem>(true);
+        foreach(ShopItem shop in shops)
+        {
+            shop.UpdateDisabled(sporeCounter);
+        }
+    }
+
+    public int GetSpore()
+    {
+        return sporeCounter;
     }
 }

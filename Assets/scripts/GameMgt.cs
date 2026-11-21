@@ -15,7 +15,7 @@ public class GameMgt : MonoBehaviour
     {
         Utils.current.getAllTiles().ForEach(tile =>
         {
-            if (Vector2.Distance(tile.transform.position, new Vector2(3f, 4f)) < 1f)
+            if (Vector2.Distance(tile.transform.position, new Vector2(3f, 2f)) < 1f)
             {
                 tile.BuildTree();
             }

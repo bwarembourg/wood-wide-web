@@ -8,17 +8,20 @@ public class NewPath : MonoBehaviour
     [SerializeField] private Sprite off;
     [SerializeField] public string type;
     [SerializeField] private Transform path;
+    [SerializeField] private GameObject disabled;
 
     public bool conRight;
     public bool conLeft;
     public bool conTop;
     public bool conBottom;
-
+    public int counter;
+    private List<SpriteRenderer> counterTxt = new List<SpriteRenderer>();
     private SpriteRenderer sr;
 
     // Start is called before the first frame update
     void Start()
     {
+        UpdateCounter();
         sr = GetComponent<SpriteRenderer>();
         if (type == "turn")
         {
@@ -47,6 +50,8 @@ public class NewPath : MonoBehaviour
 
     private void OnMouseDown()
     {
+        if (counter == 0)
+            return;
         // CLIC GAUCHE
         if (UIUnderground.current.hasSelected())
             return;
@@ -57,6 +62,8 @@ public class NewPath : MonoBehaviour
 
     private void OnMouseOver()
     {
+        if (counter == 0)
+            return;
         if (Input.GetMouseButtonDown(1))
         {
             // CLIC DROIT
@@ -99,6 +106,8 @@ public class NewPath : MonoBehaviour
 
     private void OnMouseExit()
     {
+        if (counter == 0)
+            return;
         if (UIUnderground.current.hasSelected())
             return;
         OnOff(false);
@@ -112,5 +121,25 @@ public class NewPath : MonoBehaviour
     public void Reset()
     {
         OnOff(false);
+    }
+
+    public void AddCounter()
+    {
+        counter++;
+        UpdateCounter();
+    }
+
+    public void RemoveCounter()
+    {
+        counter--;
+        UpdateCounter();
+    }
+
+    private void UpdateCounter()
+    {
+        disabled.SetActive(counter <= 0);
+        counterTxt.ForEach(sr => Destroy(sr.gameObject));
+        counterTxt.Clear();
+        counterTxt = Font.current.WriteLine("x" + counter, 1f-0.25f-0.125f, 0.25f, transform);
     }
 }

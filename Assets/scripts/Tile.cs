@@ -10,6 +10,7 @@ public class Tile : MonoBehaviour
     [SerializeField] private Sprite treeIconSprite;
     [SerializeField] private Animator tree;
     [SerializeField] private Animator mushroom;
+    [SerializeField] private ProgressBar progressBar;
 
     public float x;
     public float y;
@@ -43,9 +44,6 @@ public class Tile : MonoBehaviour
         PathState ps = IsConnected(new PathState(false, false, false));
         isConnected = ps.connected;
         path.SetBool("on", ps.connected);
-        if (ps.connected)
-        {
-        }
     }
 
     private void OnMouseDown()
@@ -58,7 +56,14 @@ public class Tile : MonoBehaviour
         NewPath selected = UIUnderground.current.GetSelected();
         if (selected != null)
         {
-            path.SetTrigger(selected.type);
+            selected.RemoveCounter();
+            if (selected.type == "mushroom")
+            {
+                path.SetTrigger("cross");
+            } else
+            {
+                path.SetTrigger(selected.type);
+            }
             path.GetComponent<Transform>().rotation = selected.GetRotation();
             conRight = selected.conRight;
             conLeft = selected.conLeft;
@@ -66,6 +71,10 @@ public class Tile : MonoBehaviour
             conBottom = selected.conBottom;
             GameMgt.current.UpdateAllTiles();
             UIUnderground.current.Reset();
+            if (selected.type == "mushroom")
+            {
+                BuildMushRoom();
+            }
         } 
     }
 
@@ -76,7 +85,14 @@ public class Tile : MonoBehaviour
         icon.gameObject.SetActive(true);
         BuildCross();
         mushroom.gameObject.SetActive(true);
+        mushroom.GetComponent<Mushroom>().Init();
         Score.current.addShroom();
+        if (OnOffSwitch.current.mode == "underground")
+        {
+            SpriteRenderer shroomSr = mushroom.GetComponent<SpriteRenderer>();
+            shroomSr.color = new Color(1f, 1f, 1f, OnOffSwitch.current.targetAlpha);
+            progressBar.UpdateUnderground();
+        }
     }
 
     public void BuildTree()

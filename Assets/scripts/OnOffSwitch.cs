@@ -4,38 +4,44 @@ using UnityEngine;
 
 public class OnOffSwitch : MonoBehaviour
 {
+    public static OnOffSwitch current;
     [SerializeField] private GameObject UIOutside;
     [SerializeField] private GameObject UIUnderground;
+    [SerializeField] private SpriteRenderer icon;
+    [SerializeField] private SpriteRenderer panel;
+    [SerializeField] private Sprite iconOut;
+    [SerializeField] private Sprite iconUnder;
+    [SerializeField] private Sprite panelOut;
+    [SerializeField] private Sprite panelUnder;
+    [SerializeField] private GameObject hover;
 
-    private string mode = "outside";
+    public string mode = "outside";
     private string oldMode = "underground";
     private bool transitioning = false;
     private List<SpriteRenderer> srs = new List<SpriteRenderer>();
-    private float targetAlpha = 0.2f;
+    public float targetAlpha = 0.2f;
     private float speed = 2f;
+    private List<SpriteRenderer> label;
+
+    public OnOffSwitch() { current = this; }
 
     // Start is called before the first frame update
     void Start()
     {
-        
+        label = Font.current.WriteLine("OUTSIDE", 1f, -0.25f, transform);
+        label.ForEach(l => l.color = new Color(0,0, 0));
     }
 
     // Update is called once per frame
     void Update()
     {
-        if(!transitioning && Input.GetKeyDown(KeyCode.Space))
+        if(Input.GetKeyDown(KeyCode.Space))
         {
-            transitioning = true;
-            if (mode == "outside")
-            {
-                SwitchToUnderground();
-            } else
-            {
-                SwitchToOutside();
-            }
+            Transition();
         }
         if (transitioning)
         {
+            srs = srs.FindAll(s => s != null && s.gameObject != null);
             srs.ForEach(s => s.color = new Color(1f, 1f, 1f, s.color.a + Time.deltaTime * speed));
             if ((srs[0].color.a <= targetAlpha && mode == "underground") || (srs[0].color.a >= targetAlpha && mode == "outside"))
             {
@@ -48,13 +54,50 @@ public class OnOffSwitch : MonoBehaviour
                 {
                     UIOutside.SetActive(false);
                     UIUnderground.SetActive(true);
+                    SetLabel("UNDERGROUND");
+                    icon.sprite = iconUnder;
+                    panel.sprite = panelUnder;
                 } else
                 {
                     UIOutside.SetActive(true);
                     UIUnderground.SetActive(false);
+                    SetLabel("OUTSIDE");
+                    icon.sprite = iconOut;
+                    panel.sprite = panelOut;
                 }
             }
         }
+    }
+
+    private void Transition()
+    {
+        if (!transitioning)
+        {
+            transitioning = true;
+            if (mode == "outside")
+            {
+                SwitchToUnderground();
+            }
+            else
+            {
+                SwitchToOutside();
+            }
+        }
+    }
+
+    private void OnMouseDown()
+    {
+        Transition();
+    }
+
+    private void OnMouseEnter()
+    {
+        hover.SetActive(true);
+    }
+
+    private void OnMouseExit()
+    {
+        hover.SetActive(false);
     }
 
     private void SwitchToOutside()
@@ -73,6 +116,14 @@ public class OnOffSwitch : MonoBehaviour
         mode = "underground";
         oldMode = "outside";
         srs = Utils.current.GetAllOutsideSprites();
+    }
+
+    private void SetLabel(string txt)
+    {
+        label.ForEach(l => Destroy(l.gameObject));
+        label.Clear();
+        label = Font.current.WriteLine(txt, 1f, -0.25f, transform);
+        label.ForEach(l => l.color = new Color(0, 0, 0));
     }
 
 }
