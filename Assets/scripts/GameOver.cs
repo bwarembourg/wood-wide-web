@@ -25,7 +25,8 @@ public class GameOver : MonoBehaviour
 
     private void Update()
     {
-        if (on && Input.GetKeyDown(KeyCode.KeypadEnter) || Input.GetKeyDown(KeyCode.Return)) {
+        if (on && (Input.GetKeyDown(KeyCode.KeypadEnter) || Input.GetKeyDown(KeyCode.Return))) {
+            Debug.Log("RESET");
             SceneManager.LoadScene("main");
         }
     }
