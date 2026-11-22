@@ -51,7 +51,7 @@ public class Spore : MonoBehaviour
             dest = go.transform.position;
             generating = false;
             harvesting = true;
-            mushroom.Init();
+            mushroom.Init(mushroom.tile);
         }
     }
 

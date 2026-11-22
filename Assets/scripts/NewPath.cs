@@ -54,14 +54,15 @@ public class NewPath : MonoBehaviour
             return;
         // CLIC GAUCHE
         if (UIUnderground.current.hasSelected())
-            return;
+        {
+            UIUnderground.current.Reset();
+        }
         OnOff(true);
         UIUnderground.current.SetSelected(this);
     }
 
     public void Rotate()
     {
-        Debug.Log("rotate");
         path.Rotate(0, 0, 90f);
         UpdateConnexions();
         if (UIUnderground.current.hasSelected())
@@ -80,9 +81,6 @@ public class NewPath : MonoBehaviour
             Rotate();
             return;
         }
-
-        if (UIUnderground.current.hasSelected())
-            return;
         OnOff(true);
     }
 

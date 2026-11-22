@@ -12,10 +12,12 @@ public class Score : MonoBehaviour
     private List<SpriteRenderer> treeCounterTxt = new List<SpriteRenderer>();
     private List<SpriteRenderer> sporeCounterTxt = new List<SpriteRenderer>();
     private List<SpriteRenderer> underSporeCounterTxt = new List<SpriteRenderer>();
+    private List<SpriteRenderer> dayCounterTxt = new List<SpriteRenderer>();
 
     private int shroomCounter;
     private int treeCounter;
     private int sporeCounter;
+    private int dayCounter;
 
     public Score()
     {
@@ -25,9 +27,11 @@ public class Score : MonoBehaviour
     // Start is called before the first frame update
     void Start()
     {
+        dayCounter = 1;
         UpdateShroomCounterTxt();
         UpdateTreeCounterTxt();
         UpdateSporeCounterTxt();
+        UpdateDayTxt();
     }
 
     // Update is called once per frame
@@ -40,6 +44,31 @@ public class Score : MonoBehaviour
     {
         shroomCounter++;
         UpdateShroomCounterTxt();
+        ShopItem[] shops = FindObjectsOfType<ShopItem>();
+        foreach(ShopItem shop in shops) {
+            shop.SetPrice();
+        }
+    }
+
+    public void UpdatePrice()
+    {
+        ShopItem[] shops = FindObjectsOfType<ShopItem>(true);
+        foreach (ShopItem shop in shops)
+        {
+            shop.SetPrice();
+        }
+    }
+
+    public void removeShroom()
+    {
+        shroomCounter--;
+        UpdateShroomCounterTxt();
+        UpdatePrice();
+    }
+
+    public int getShroom()
+    {
+        return shroomCounter;
     }
 
     private void UpdateShroomCounterTxt()
@@ -53,6 +82,16 @@ public class Score : MonoBehaviour
     {
         treeCounter++;
         UpdateTreeCounterTxt();
+    }
+
+    public void removeTree()
+    {
+        treeCounter--;
+        UpdateTreeCounterTxt();
+        if (treeCounter <= 0)
+        {
+            GameOver.current.Init();
+        }
     }
 
     private void UpdateTreeCounterTxt()
@@ -81,6 +120,26 @@ public class Score : MonoBehaviour
         {
             shop.UpdateDisabled(sporeCounter);
         }
+    }
+
+    public void addDay()
+    {
+        dayCounter++;
+        UpdateDayTxt();
+        GameMgt.current.ResetTimerEat();
+    }
+
+    public int GetDay()
+    {
+        return dayCounter;
+    }
+
+    private void UpdateDayTxt()
+    {
+        dayCounterTxt.ForEach(d => Destroy(d.gameObject));
+        dayCounterTxt.Clear();
+        dayCounterTxt = Font.current.WriteLine("DAY " + dayCounter.ToString(), -2f + 0.375f, -0.5f + 0.25f -1.125f, transform);
+
     }
 
     public int GetSpore()

@@ -40,8 +40,7 @@ public class ProgressBar : MonoBehaviour
 
     public void UpdateUnderground()
     {
-        sr.color = new Color(1f, 1f, 1f, OnOffSwitch.current.targetAlpha);
-        GetComponent<SpriteRenderer>().color = new Color(1f, 1f, 1f, OnOffSwitch.current.targetAlpha);
+        
     }
 
 }

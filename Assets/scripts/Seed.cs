@@ -36,9 +36,10 @@ public class Seed : MonoBehaviour
     {
         if (OnOffSwitch.current.mode == "outside" && !generating)
         {
-            Destroy(gameObject);
-            tree.InitConnected();
             tile.BuildGrowingTree();
+            tree.hasSeed = false;
+            tree.InitConnected();
+            Destroy(gameObject);
         }
     }
 
@@ -49,16 +50,19 @@ public class Seed : MonoBehaviour
         if (destTile == null)
         {
             Destroy(gameObject);
+            tree.hasSeed = false;
             tree.InitConnected();
             return;
-        }
-        tile = destTile;
-        dest = destTile.transform.position;
-        generating = true;
-        if (OnOffSwitch.current.mode == "underground")
+        } else
         {
-            SpriteRenderer sr = GetComponent<SpriteRenderer>();
-            sr.color = new Color(1f, 1f, 1f, OnOffSwitch.current.targetAlpha);
+            tile = destTile;
+            dest = destTile.transform.position;
+            generating = true;
+            if (OnOffSwitch.current.mode == "underground")
+            {
+                SpriteRenderer sr = GetComponent<SpriteRenderer>();
+                sr.color = new Color(1f, 1f, 1f, OnOffSwitch.current.targetAlpha);
+            }
         }
     }
 }

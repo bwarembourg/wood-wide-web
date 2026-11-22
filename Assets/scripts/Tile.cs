@@ -47,15 +47,25 @@ public class Tile : MonoBehaviour
         PathState ps = IsConnected(new PathState(false, false, false));
         isConnected = ps.connected;
         path.SetBool("on", ps.connected);
+        GameMgt.current.syncAnims();
         if (isTree && isConnected)
         {
-            tree.GetComponent<Tree>().InitConnected();
+            tree.SetBool("dying", false);
+            if (!tree.GetComponent<Tree>().growing)
+            {
+                tree.GetComponent<Tree>().InitConnected();
+            }
             if (OnOffSwitch.current.mode == "underground")
             {
                 SpriteRenderer treeSr = tree.GetComponent<SpriteRenderer>();
                 treeSr.color = new Color(1f, 1f, 1f, OnOffSwitch.current.targetAlpha);
                 progressBar.UpdateUnderground();
             }
+        }
+        else if (isTree && !isConnected && !tree.GetComponent<Tree>().growing)
+        {
+            tree.SetBool("dying", true);
+            tree.GetComponent<Tree>().InitDying();
         }
     }
 
@@ -129,7 +139,8 @@ public class Tile : MonoBehaviour
             conLeft = selected.conLeft;
             conTop = selected.conTop;
             conBottom = selected.conBottom;
-            UIUnderground.current.Reset();
+            if (selected.counter <= 0)
+                UIUnderground.current.Reset();
             if (selected.type == "mushroom")
             {
                 BuildMushRoom();
@@ -139,6 +150,41 @@ public class Tile : MonoBehaviour
         } 
     }
 
+    public void DeletePath()
+    {
+        path.SetTrigger("reset");
+        conRight = false;
+        conLeft = false;
+        conTop = false;
+        conBottom = false;
+        isConnected = false;
+    }
+
+    public void DeleteMushroom()
+    {
+        DeletePath();
+        mushroom.GetComponent<Mushroom>().RemoveSpore();
+        icon.gameObject.SetActive(false);
+        mushroom.GetComponent<Mushroom>().Delete();
+        mushroom.gameObject.SetActive(false);
+        Score.current.removeShroom();
+        GameMgt.current.UpdateAllTiles();
+        isMushroom = false;
+        isConnected = false;
+    }
+
+    public void DeleteTree()
+    {
+        DeletePath();
+        tree.GetComponent<Tree>().RemoveSeed();
+        icon.gameObject.SetActive(false);
+        tree.gameObject.SetActive(false);
+        Score.current.removeTree();
+        GameMgt.current.UpdateAllTiles();
+        isTree = false;
+        isConnected = false;
+    }
+
     public void BuildMushRoom()
     {
         isMushroom = true;
@@ -146,7 +192,7 @@ public class Tile : MonoBehaviour
         icon.gameObject.SetActive(true);
         BuildCross();
         mushroom.gameObject.SetActive(true);
-        mushroom.GetComponent<Mushroom>().Init();
+        mushroom.GetComponent<Mushroom>().Init(this);
         Score.current.addShroom();
         if (OnOffSwitch.current.mode == "underground")
         {
@@ -157,13 +203,15 @@ public class Tile : MonoBehaviour
         path.SetTrigger("cross");
     }
 
-    public void BuildTree()
+    public void BuildTree(bool isFirst = false)
     {
+        tree.GetComponent<Tree>().isFirst = isFirst;
         isTree = true;
+        if (isFirst)
+            tree.SetBool("dying", false);
         icon.sprite = treeIconSprite;
         icon.gameObject.SetActive(true);
         tree.gameObject.SetActive(true);
-        tree.SetTrigger("grown");
         Score.current.addTree();
         BuildCross();
         if (OnOffSwitch.current.mode == "underground")
@@ -173,6 +221,22 @@ public class Tile : MonoBehaviour
             progressBar.UpdateUnderground();
         }
         path.SetTrigger("cross");
+        tree.SetTrigger("grown");
+        if (isConnected)
+        {
+            tree.SetBool("dying", false);
+            tree.GetComponent<Tree>().InitConnected();
+        } else
+        {
+            if (!isFirst)
+            {
+                tree.SetBool("dying", true);
+                tree.GetComponent<Tree>().InitDying();
+            } else
+            {
+                tree.SetBool("dying", false);
+            }
+        }
     }
 
     public void BuildGrowingTree()
@@ -180,9 +244,10 @@ public class Tile : MonoBehaviour
         isTree = true;
         icon.sprite = treeIconSprite;
         icon.gameObject.SetActive(true);
+        tree.GetComponent<Tree>().InitGrowing();
         BuildCross();
         tree.gameObject.SetActive(true);
-        tree.GetComponent<Tree>().InitGrowing();
+        
         Score.current.addTree();
         if (OnOffSwitch.current.mode == "underground")
         {

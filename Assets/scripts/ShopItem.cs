@@ -9,19 +9,36 @@ public class ShopItem : MonoBehaviour
     [SerializeField] private GameObject disabled;
 
     public int price;
+    public int startingPrice;
     public string type;
-    private List<SpriteRenderer> priceTxt;
+    private List<SpriteRenderer> priceTxt = new List<SpriteRenderer>();
 
     // Start is called before the first frame update
     void Start()
     {
-        priceTxt = Font.current.WriteLine(price.ToString(), 0.875f, -1.6875f, transform);
+        startingPrice = price;
+        UpdatePrice();
     }
 
     // Update is called once per frame
     void Update()
     {
         
+    }
+
+    public void SetPrice()
+    {
+        int multiplier = type == "path" ? 1 : 5;
+        price = startingPrice + multiplier * (Score.current.getShroom() - 1);
+        UpdatePrice();
+        UpdateDisabled(Score.current.GetSpore());
+    }
+
+    private void UpdatePrice()
+    {
+        priceTxt.ForEach(p => Destroy(p.gameObject));
+        priceTxt.Clear();
+        priceTxt = Font.current.WriteLine(price.ToString(), 0.875f, -1.6875f, transform);
     }
 
     private void OnMouseDown()

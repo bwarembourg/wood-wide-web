@@ -73,6 +73,7 @@ public class OnOffSwitch : MonoBehaviour
 
     private void Transition()
     {
+        UIUnderground.GetComponent<UIUnderground>().Reset();
         if (!transitioning)
         {
             transitioning = true;

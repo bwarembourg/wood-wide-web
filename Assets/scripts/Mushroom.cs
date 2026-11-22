@@ -10,6 +10,8 @@ public class Mushroom : MonoBehaviour
 
     private bool working;
     private float timer;
+    public Tile tile;
+    private Spore spore;
   
     // Start is called before the first frame update
     void Start()
@@ -29,15 +31,36 @@ public class Mushroom : MonoBehaviour
                 timer = 0;
                 progressBar.gameObject.SetActive(false);
                 working = false;
-                Spore spore = Instantiate(sporePrefab, transform.position - new Vector3(0, 0.25f, 0), Quaternion.identity, transform);
+                spore = Instantiate(sporePrefab, transform.position - new Vector3(0, 0.25f, 0), Quaternion.identity, transform);
                 spore.Init(this);
             }
         }
     }
 
-    public void Init()
+    public void Init(Tile newTile)
     {
+        tile = newTile;
         working = true;
         progressBar.gameObject.SetActive(true);
+    }
+
+    public void Eat()
+    {
+        tile.DeleteMushroom();
+    }
+
+    public void Delete()
+    {
+        working = false;
+        progressBar.gameObject.SetActive(false);
+        timer = 0;
+    }
+
+    public void RemoveSpore()
+    {
+        if (spore != null && spore.gameObject != null)
+        {
+            Destroy(spore.gameObject);
+        }
     }
 }
