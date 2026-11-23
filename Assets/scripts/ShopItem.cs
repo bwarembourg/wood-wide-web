@@ -29,9 +29,8 @@ public class ShopItem : MonoBehaviour
     public void SetPrice()
     {
         int multiplierSh = type == "path" ? 1 : 5;
-        int multiplierDay = type == "path" ? 0 : 5;
-        int days = Score.current.GetDay() > 1 ? Score.current.GetDay() : 1;
-        price = startingPrice + multiplierSh * (Score.current.getShroom() - 1) + multiplierDay * (days - 1);
+
+        price = startingPrice + multiplierSh * (Score.current.getShroom() - 1);
         UpdatePrice();
         UpdateDisabled(Score.current.GetSpore());
     }

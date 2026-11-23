@@ -99,9 +99,10 @@ public class Tree : MonoBehaviour
 
     public void InitConnected()
     {
+        Debug.Log("init connected");
         timerDying = 0;
         timerGrowing = 0;
-        if (!growing && !hasSeed)
+        if (!growing)
         {
             isFirst = false;
             growing = false;
@@ -111,6 +112,17 @@ public class Tree : MonoBehaviour
             progressBar.transform.localPosition = new Vector3(0, 0.5625f + 0.75f, 0);
             progressBar.gameObject.SetActive(true);
         }
+    }
+
+    public void generateSeed()
+    {
+        isFirst = false;
+        growing = false;
+        dying = false;
+        working = true;
+        dyingProgressBar.gameObject.SetActive(false);
+        progressBar.transform.localPosition = new Vector3(0, 0.5625f + 0.75f, 0);
+        progressBar.gameObject.SetActive(true);
     }
 
     public void InitDying()

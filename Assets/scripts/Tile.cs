@@ -90,13 +90,8 @@ public class Tile : MonoBehaviour
                 return;
             }
         }
-    }
-
-    private void OnMouseEnter()
-    {
         if (isMushroom || isTree)
             return;
-        NewPath selected = UIUnderground.current.GetSelected();
         if (selected != null)
         {
             hover.gameObject.SetActive(true);
@@ -114,9 +109,9 @@ public class Tile : MonoBehaviour
         }
     }
 
+
     private void OnMouseExit()
     {
-        hover.SetTrigger("reset");
         hover.gameObject.SetActive(false);
         hoverIcon.SetActive(false);
     }

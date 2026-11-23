@@ -40,7 +40,7 @@ public class Seed : MonoBehaviour
         {
             tile.BuildGrowingTree();
             tree.hasSeed = false;
-            tree.InitConnected();
+            tree.generateSeed();
             Destroy(gameObject);
         }
     }
@@ -57,7 +57,7 @@ public class Seed : MonoBehaviour
         {
             Destroy(gameObject);
             tree.hasSeed = false;
-            tree.InitConnected();
+            tree.generateSeed();
             return;
         } else
         {
