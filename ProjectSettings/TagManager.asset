@@ -47,8 +47,14 @@ TagManager:
   - 
   - 
   m_SortingLayers:
+  - name: bg underground
+    uniqueID: 3561503169
+    locked: 0
   - name: underground
     uniqueID: 3353318243
+    locked: 0
+  - name: bg out
+    uniqueID: 4117336971
     locked: 0
   - name: Default
     uniqueID: 0

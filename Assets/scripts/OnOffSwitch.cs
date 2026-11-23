@@ -42,14 +42,14 @@ public class OnOffSwitch : MonoBehaviour
         if (transitioning)
         {
             srs = srs.FindAll(s => s != null && s.gameObject != null);
-            srs.ForEach(s => s.color = new Color(1f, 1f, 1f, s.color.a + Time.deltaTime * speed));
+            srs.ForEach(s => s.color = new Color(s.color.r, s.color.g, s.color.b, s.color.a + Time.deltaTime * speed));
             if ((srs[0].color.a <= targetAlpha && mode == "underground") || (srs[0].color.a >= targetAlpha && mode == "outside"))
             {
-                srs.ForEach(s => s.color = new Color(1f, 1f, 1f, targetAlpha));
+                srs.ForEach(s => s.color = new Color(s.color.r, s.color.g, s.color.b, targetAlpha));
                 transitioning = false;
                 srs
                     .FindAll(sr => sr.gameObject.CompareTag(oldMode + "tile"))
-                    .ForEach(s => s.color = new Color(1f, 1f, 1f, 0));
+                    .ForEach(s => s.color = new Color(s.color.r, s.color.g, s.color.b, 0));
                 if (mode == "underground")
                 {
                     UIOutside.SetActive(false);
