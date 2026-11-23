@@ -38,7 +38,7 @@ public class GameOver : MonoBehaviour
     private void Update()
     {
         if (on && (Input.GetKeyDown(KeyCode.KeypadEnter) || Input.GetKeyDown(KeyCode.Return))) {
-            SceneManager.LoadScene("main");
+            SceneManager.LoadScene("SampleScene");
         }
     }
 }
