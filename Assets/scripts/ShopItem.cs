@@ -28,8 +28,10 @@ public class ShopItem : MonoBehaviour
 
     public void SetPrice()
     {
-        int multiplier = type == "path" ? 1 : 5;
-        price = startingPrice + multiplier * (Score.current.getShroom() - 1);
+        int multiplierSh = type == "path" ? 1 : 5;
+        int multiplierDay = type == "path" ? 0 : 5;
+        int days = Score.current.GetDay() > 1 ? Score.current.GetDay() : 1;
+        price = startingPrice + multiplierSh * (Score.current.getShroom() - 1) + multiplierDay * (days - 1);
         UpdatePrice();
         UpdateDisabled(Score.current.GetSpore());
     }
@@ -43,6 +45,9 @@ public class ShopItem : MonoBehaviour
 
     private void OnMouseDown()
     {
+        if (!GameMgt.current.gameOn() && Tuto.current.tutoId != 4)
+            return;
+
         if (Score.current.GetSpore() >= price)
         {
             Score.current.addSpore(-price);
@@ -64,5 +69,9 @@ public class ShopItem : MonoBehaviour
     public void UpdateDisabled(int spores)
     {
         disabled.SetActive(spores < price);
+        if (type == "path" && spores < price && Tuto.current.tutoId == 4)
+        {
+            Tuto.current.EndTuto4();
+        }
     } 
 }

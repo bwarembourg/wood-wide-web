@@ -27,6 +27,7 @@ public class Tile : MonoBehaviour
     public bool isSeed;
 
     public bool isConnected;
+    public bool isTuto;
 
     // Start is called before the first frame update
     void Start()
@@ -122,8 +123,10 @@ public class Tile : MonoBehaviour
 
     public void BuildPath()
     {
+        if (!GameMgt.current.gameOn() && Tuto.current.tutoId != 6)
+            return;
         NewPath selected = UIUnderground.current.GetSelected();
-        if (selected != null)
+        if (selected != null && ((Tuto.current.tutoId == 6 && selected.type == "line" && selected.conRight && selected.conLeft && isTuto) || GameMgt.current.gameOn()))
         {
             selected.RemoveCounter();
             if (selected.type == "mushroom")
@@ -131,7 +134,6 @@ public class Tile : MonoBehaviour
                 path.SetTrigger("cross");
             } else
             {
-
                 path.SetTrigger(selected.type);
             }
             path.GetComponent<Transform>().rotation = selected.GetRotation();
@@ -146,7 +148,10 @@ public class Tile : MonoBehaviour
                 BuildMushRoom();
             }
             GameMgt.current.UpdateAllTiles();
-            GameMgt.current.UpdateAllTiles();
+            if (Tuto.current.tutoId == 6)
+            {
+                Tuto.current.EndTuto6();
+            }
         } 
     }
 

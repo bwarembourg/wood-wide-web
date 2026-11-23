@@ -30,7 +30,7 @@ public class Life : MonoBehaviour
         UpdateLife();
         if (life <= 0)
         {
-            GameOver.current.Init();
+            GameOver.current.Init("No more hearts...");
         }
     }
 

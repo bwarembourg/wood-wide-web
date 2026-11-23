@@ -39,6 +39,8 @@ public class GameMgt : MonoBehaviour
         {
             UIUnderground.current.Reset();
         }
+        if (!gameOn())
+            return;
         timerDay += Time.deltaTime;
         dayProgressBar.UpdateProgressBar(timerDay, maxTimerDay);
         if (timerDay >= maxTimerDay)
@@ -95,6 +97,11 @@ public class GameMgt : MonoBehaviour
                 g.GetComponent<Animator>().Play(currentState.fullPathHash, 0, 0f);
                 g.GetComponent<Animator>().Update(time);
             });
+    }
+
+    public bool gameOn()
+    {
+        return !Tuto.current.isTuto && !GameOver.current.on;
     }
 }
 

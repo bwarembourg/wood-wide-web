@@ -42,6 +42,14 @@ public class Mushroom : MonoBehaviour
         tile = newTile;
         working = true;
         progressBar.gameObject.SetActive(true);
+        if (!GameMgt.current.gameOn() && Tuto.current.tutoId == 0)
+        {
+            timer = 0;
+            progressBar.gameObject.SetActive(false);
+            working = false;
+            spore = Instantiate(sporePrefab, transform.position - new Vector3(0, 0.25f, 0), Quaternion.identity, transform);
+            spore.Init(this);
+        }
     }
 
     public void Eat()

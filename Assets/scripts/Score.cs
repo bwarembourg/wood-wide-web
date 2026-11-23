@@ -71,6 +71,11 @@ public class Score : MonoBehaviour
         return shroomCounter;
     }
 
+    public int getTree()
+    {
+        return treeCounter;
+    }
+
     private void UpdateShroomCounterTxt()
     {
         shroomCounterTxt.ForEach(f => Destroy(f.gameObject));
@@ -90,7 +95,7 @@ public class Score : MonoBehaviour
         UpdateTreeCounterTxt();
         if (treeCounter <= 0)
         {
-            GameOver.current.Init();
+            GameOver.current.Init("No more trees...");
         }
     }
 

@@ -45,6 +45,8 @@ public class Spore : MonoBehaviour
 
     private void OnMouseDown()
     {
+        if (!GameMgt.current.gameOn() && Tuto.current.tutoId != 2)
+            return;
         if (OnOffSwitch.current.mode == "outside")
         {
             GameObject go = GameObject.FindGameObjectWithTag("sporedest");
@@ -52,6 +54,10 @@ public class Spore : MonoBehaviour
             generating = false;
             harvesting = true;
             mushroom.Init(mushroom.tile);
+            if (Tuto.current.tutoId == 2)
+            {
+                Tuto.current.EndTuto2();
+            }
         }
     }
 

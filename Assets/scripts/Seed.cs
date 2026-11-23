@@ -34,6 +34,8 @@ public class Seed : MonoBehaviour
 
     private void OnMouseDown()
     {
+        if (!GameMgt.current.gameOn())
+            return;
         if (OnOffSwitch.current.mode == "outside" && !generating)
         {
             tile.BuildGrowingTree();
@@ -47,6 +49,10 @@ public class Seed : MonoBehaviour
     {
         tree = newTree;
         Tile destTile = Utils.current.GetRandomEmptyTiles(tree.transform.position, 6f);
+        if (Tuto.current.isTuto)
+        {
+            destTile = Tuto.current.targetTreeTile;
+        }
         if (destTile == null)
         {
             Destroy(gameObject);

@@ -40,19 +40,28 @@ public class DragIcon : MonoBehaviour
         goDest = GameObject.FindGameObjectWithTag("iconline");
         if (type == "path")
         {
-            int rand = Random.Range(0, 5);
-            if (rand < 2)
+            if (Tuto.current.tutoId == 4)
             {
                 sr.sprite = line;
                 goDest = GameObject.FindGameObjectWithTag("iconline");
-            } else if (rand < 4)
-            {
-                sr.sprite = turn;
-                goDest = GameObject.FindGameObjectWithTag("iconturn");
             } else
             {
-                sr.sprite = cross;
-                goDest = GameObject.FindGameObjectWithTag("iconcross");
+                int rand = Random.Range(0, 5);
+                if (rand < 2)
+                {
+                    sr.sprite = line;
+                    goDest = GameObject.FindGameObjectWithTag("iconline");
+                }
+                else if (rand < 4)
+                {
+                    sr.sprite = turn;
+                    goDest = GameObject.FindGameObjectWithTag("iconturn");
+                }
+                else
+                {
+                    sr.sprite = cross;
+                    goDest = GameObject.FindGameObjectWithTag("iconcross");
+                }
             }
         }
         else

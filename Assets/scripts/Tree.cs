@@ -6,7 +6,7 @@ public class Tree : MonoBehaviour
 {
     [SerializeField] ProgressBar progressBar;
     [SerializeField] ProgressBar dyingProgressBar;
-    [SerializeField] float maxSeed;
+    [SerializeField] public float maxSeed;
     [SerializeField] float maxGrow;
     [SerializeField] float maxDie;
     [SerializeField] Seed seedPrefab;
@@ -33,7 +33,7 @@ public class Tree : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        if(working && !growing && !dying)
+        if(working && !growing && !dying && (GameMgt.current.gameOn() || Tuto.current.tutoId == 12))
         {
             timerWorking += Time.deltaTime;
             progressBar.UpdateProgressBar(timerWorking, maxSeed);
@@ -45,6 +45,10 @@ public class Tree : MonoBehaviour
                 hasSeed = true;
                 seed = Instantiate(seedPrefab, transform.position - new Vector3(0, 0.5f, 0), Quaternion.identity, transform);
                 seed.Init(this);
+                if (Tuto.current.tutoId == 12)
+                {
+                    Tuto.current.EndTuto12();
+                }
             }
         }
         else if (growing)

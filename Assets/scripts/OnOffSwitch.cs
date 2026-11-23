@@ -73,6 +73,8 @@ public class OnOffSwitch : MonoBehaviour
 
     private void Transition()
     {
+        if (!GameMgt.current.gameOn() && Tuto.current.tutoId != 3 && Tuto.current.tutoId != 11)
+            return;
         UIUnderground.GetComponent<UIUnderground>().Reset();
         if (!transitioning)
         {
@@ -85,6 +87,14 @@ public class OnOffSwitch : MonoBehaviour
             {
                 SwitchToOutside();
             }
+        }
+        if (Tuto.current.tutoId == 3)
+        {
+            Tuto.current.EndTuto3();
+        }
+        if (Tuto.current.tutoId == 11)
+        {
+            Tuto.current.EndTuto11();
         }
     }
 

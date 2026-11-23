@@ -52,6 +52,9 @@ public class NewPath : MonoBehaviour
     {
         if (counter == 0)
             return;
+
+        if (!GameMgt.current.gameOn() && Tuto.current.tutoId != 5)
+            return;
         // CLIC GAUCHE
         if (UIUnderground.current.hasSelected())
         {
@@ -59,6 +62,10 @@ public class NewPath : MonoBehaviour
         }
         OnOff(true);
         UIUnderground.current.SetSelected(this);
+        if (Tuto.current.tutoId == 5)
+        {
+            Tuto.current.EndTuto5();
+        }
     }
 
     public void Rotate()
