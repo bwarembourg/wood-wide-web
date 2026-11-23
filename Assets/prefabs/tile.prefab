@@ -305,6 +305,7 @@ MonoBehaviour:
   isTree: 0
   isSeed: 0
   isConnected: 0
+  isTuto: 0
 --- !u!61 &5075717085551660391
 BoxCollider2D:
   m_ObjectHideFlags: 0
@@ -991,6 +992,7 @@ MonoBehaviour:
   progressBar: {fileID: 5766343578577934335}
   max: 10
   sporePrefab: {fileID: 6829870902600408875, guid: bdff80fc5ac5b482eb890240f564cfbe, type: 3}
+  puff: {fileID: 390399152533058158, guid: 0708d9d44f5514b748d5739839bae1ea, type: 3}
   tile: {fileID: 0}
 --- !u!95 &125829472495352794 stripped
 Animator:
@@ -1199,6 +1201,7 @@ MonoBehaviour:
   seedPrefab: {fileID: 7191466146912767956, guid: 0831673c7f52740a4886a206aa1592d3, type: 3}
   tile: {fileID: 3382723523914032345}
   heart: {fileID: 7549715571732047478, guid: 93d56ac1af1bb474ea6c9cfb5d783ce4, type: 3}
+  puff: {fileID: 390399152533058158, guid: 0708d9d44f5514b748d5739839bae1ea, type: 3}
   growing: 0
   hasSeed: 0
   isFirst: 0

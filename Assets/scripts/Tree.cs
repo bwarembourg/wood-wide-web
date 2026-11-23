@@ -12,6 +12,7 @@ public class Tree : MonoBehaviour
     [SerializeField] Seed seedPrefab;
     [SerializeField] Tile tile;
     [SerializeField] SpriteRenderer heart;
+    [SerializeField] Puff puff;
 
     private bool working;
     private float timerGrowing;
@@ -77,6 +78,7 @@ public class Tree : MonoBehaviour
                 timerDying = 0;
                 dyingProgressBar.gameObject.SetActive(false);
                 dying = false;
+                Instantiate(puff, transform.position, Quaternion.identity, GameMgt.current.transform);
                 tile.DeleteTree();
             }
         }

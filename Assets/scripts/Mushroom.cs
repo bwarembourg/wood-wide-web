@@ -7,6 +7,7 @@ public class Mushroom : MonoBehaviour
     [SerializeField] ProgressBar progressBar;
     [SerializeField] float max;
     [SerializeField] Spore sporePrefab;
+    [SerializeField] Puff puff;
 
     private bool working;
     private float timer;
@@ -59,6 +60,7 @@ public class Mushroom : MonoBehaviour
 
     public void Delete()
     {
+        Instantiate(puff, transform.position, Quaternion.identity, GameMgt.current.transform);
         working = false;
         progressBar.gameObject.SetActive(false);
         timer = 0;

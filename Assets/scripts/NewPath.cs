@@ -122,7 +122,7 @@ public class NewPath : MonoBehaviour
     {
         if (counter == 0)
             return;
-        if (UIUnderground.current.hasSelected())
+        if (UIUnderground.current.GetSelected() != null && UIUnderground.current.GetSelected().type == type)
             return;
         OnOff(false);
     }
