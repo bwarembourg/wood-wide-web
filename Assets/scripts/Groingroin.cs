@@ -38,6 +38,7 @@ public class Groingroin : MonoBehaviour
                 animator.SetTrigger("idle");
                 going = false;
                 eating = true;
+                SFX.current.Play("EATING");
             }
         }
         if (eating)
@@ -50,6 +51,7 @@ public class Groingroin : MonoBehaviour
                 animator.SetTrigger("run");
                 eating = false;
                 goingBack = true;
+                SFX.current.Play("ANIMAL");
             }
         }
         if (goingBack)
@@ -71,5 +73,6 @@ public class Groingroin : MonoBehaviour
         initialPos = transform.position;
         dest = mushroom.transform.position - new Vector3(0.25f + 2f/16f, 0);
         going = true;
+        SFX.current.Play("ANIMAL");
     }
 }

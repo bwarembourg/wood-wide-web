@@ -25,6 +25,7 @@ public class GameOver : MonoBehaviour
 
     public void Init(string msg)
     {
+        Music.current.PlayGameOver();
         on = true;
         ui.SetActive(true);
         Font.current.WriteLine(msg, 0, 1f, ui.transform, 1000, true, true, 25f, "UI");

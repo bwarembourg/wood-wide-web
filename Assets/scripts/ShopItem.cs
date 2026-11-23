@@ -52,6 +52,7 @@ public class ShopItem : MonoBehaviour
             Score.current.addSpore(-price);
             DragIcon dragIcon = Instantiate(dragIconPrefab, transform.position + new Vector3(0.75f, -0.75f, 0), Quaternion.identity, transform);
             dragIcon.Init(type);
+            SFX.current.Play("GET_PATH");
         }
     }
 

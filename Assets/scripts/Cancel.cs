@@ -18,6 +18,7 @@ public class Cancel : MonoBehaviour
 
     private void OnMouseDown()
     {
+        SFX.current.Play("CLICK");
         UIUnderground.current.Reset();
     }
 }

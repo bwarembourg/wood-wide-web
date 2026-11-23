@@ -102,7 +102,6 @@ public class Tile : MonoBehaviour
             }
             else
             {
-
                 hover.SetTrigger(selected.type);
             }
             hover.GetComponent<Transform>().rotation = selected.GetRotation();
@@ -126,9 +125,11 @@ public class Tile : MonoBehaviour
             selected.RemoveCounter();
             if (selected.type == "mushroom")
             {
+                SFX.current.Play("BUILD_MUSHROOM");
                 path.SetTrigger("cross");
             } else
             {
+                SFX.current.Play("BUILD_PATH");
                 path.SetTrigger(selected.type);
             }
             path.GetComponent<Transform>().rotation = selected.GetRotation();

@@ -81,10 +81,12 @@ public class OnOffSwitch : MonoBehaviour
             transitioning = true;
             if (mode == "outside")
             {
+                SFX.current.Play("TO_OUTSIDE");
                 SwitchToUnderground();
             }
             else
             {
+                SFX.current.Play("TO_UNDERGROUND");
                 SwitchToOutside();
             }
         }

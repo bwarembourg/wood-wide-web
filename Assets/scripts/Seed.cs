@@ -41,6 +41,7 @@ public class Seed : MonoBehaviour
             tile.BuildGrowingTree();
             tree.hasSeed = false;
             tree.generateSeed();
+            SFX.current.Play("GET_SEED");
             Destroy(gameObject);
         }
     }

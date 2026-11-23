@@ -54,6 +54,7 @@ public class Spore : MonoBehaviour
             generating = false;
             harvesting = true;
             mushroom.Init(mushroom.tile);
+            SFX.current.Play("GET_SEED");
             if (Tuto.current.tutoId == 2)
             {
                 Tuto.current.EndTuto2();

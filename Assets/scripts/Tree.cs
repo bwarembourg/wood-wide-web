@@ -46,6 +46,7 @@ public class Tree : MonoBehaviour
                 hasSeed = true;
                 seed = Instantiate(seedPrefab, transform.position - new Vector3(0, 0.5f, 0), Quaternion.identity, transform);
                 seed.Init(this);
+                SFX.current.Play("NEW_SEED");
                 if (Tuto.current.tutoId == 12)
                 {
                     Tuto.current.EndTuto12();
@@ -65,6 +66,7 @@ public class Tree : MonoBehaviour
                 tile.UpdateIsConnected();
                 if (tile.isConnected)
                 {
+                    SFX.current.Play("TREE_GROWN");
                     InitConnected();
                 }
             }
@@ -80,6 +82,7 @@ public class Tree : MonoBehaviour
                 dying = false;
                 Instantiate(puff, transform.position, Quaternion.identity, GameMgt.current.transform);
                 tile.DeleteTree();
+                SFX.current.Play("TREE_DEAD");
             }
         }
     }

@@ -60,6 +60,7 @@ public class NewPath : MonoBehaviour
         {
             UIUnderground.current.Reset();
         }
+        SFX.current.Play("CLICK");
         OnOff(true);
         UIUnderground.current.SetSelected(this);
         if (Tuto.current.tutoId == 5)
@@ -70,6 +71,7 @@ public class NewPath : MonoBehaviour
 
     public void Rotate()
     {
+        SFX.current.Play("ROTATE");
         path.Rotate(0, 0, 90f);
         UpdateConnexions();
         if (UIUnderground.current.hasSelected())

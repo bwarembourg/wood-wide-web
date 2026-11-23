@@ -34,6 +34,7 @@ public class Mushroom : MonoBehaviour
                 working = false;
                 spore = Instantiate(sporePrefab, transform.position - new Vector3(0, 0.25f, 0), Quaternion.identity, transform);
                 spore.Init(this);
+                SFX.current.Play("NEW_SEED");
             }
         }
     }
@@ -55,6 +56,7 @@ public class Mushroom : MonoBehaviour
 
     public void Eat()
     {
+        SFX.current.Play("TREE_DEAD");
         tile.DeleteMushroom();
     }
 

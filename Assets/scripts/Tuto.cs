@@ -19,6 +19,7 @@ public class Tuto : MonoBehaviour
     float timer = 0;
     float maxTimerChar = 0.02f;
     int id = 0;
+    int lastId = 0;
 
     private void Awake()
     {
@@ -36,6 +37,11 @@ public class Tuto : MonoBehaviour
     {
         if (isTuto)
         {
+            if (id - lastId >= 4)
+            {
+                SFX.current.Play("DIAL");
+                lastId = id;
+            }
             if (tutoId == 0)
             {
                 timer += Time.deltaTime;
@@ -54,6 +60,7 @@ public class Tuto : MonoBehaviour
                 {
                     keyEnter.SetActive(false);
                     id = 0;
+                    lastId = 0;
                     clearDialog();
                     Write("Your work, if you accept it, is to make a forest by spreading mushroom and trees. See this spore ?");
                     tutoId = 1;
@@ -77,6 +84,8 @@ public class Tuto : MonoBehaviour
                 {
                     keyEnter.SetActive(false);
                     id = 0;
+                    lastId = 0;
+
                     clearDialog();
                     Write("Click on it to catch it!");
                     tutoId = 2;
@@ -112,6 +121,8 @@ public class Tuto : MonoBehaviour
                 {
                     keyEnter.SetActive(false);
                     id = 0;
+                    lastId = 0;
+
                     clearDialog();
                     Write("You can also get mushrooms. Getting more mushroom will help securing the forest.");
                     tutoId = 8;
@@ -137,6 +148,8 @@ public class Tuto : MonoBehaviour
                 {
                     keyEnter.SetActive(false);
                     id = 0;
+                    lastId = 0;
+
                     clearDialog();
                     Write("Sometimes, animals eat mushrooms.");
                     tutoId = 9;
@@ -161,6 +174,8 @@ public class Tuto : MonoBehaviour
                 {
                     keyEnter.SetActive(false);
                     id = 0;
+                    lastId = 0;
+
                     clearDialog();
                     Write("If you have no more mushroom, your trees will be tired and you will lose health.");
                     tutoId = 10;
@@ -187,6 +202,8 @@ public class Tuto : MonoBehaviour
                 {
                     keyEnter.SetActive(false);
                     id = 0;
+                    lastId = 0;
+
                     clearDialog();
                     Write("Now let's go back outside by clicking space or on the upper button.");
                     tutoId = 11;
@@ -202,6 +219,8 @@ public class Tuto : MonoBehaviour
                 {
                     dialogTxt[id].gameObject.SetActive(true);
                     id++;
+                    lastId = 0;
+
                     FindObjectOfType<Tree>().maxSeed = 5f;
                     timer = 0;
                 }
@@ -213,6 +232,8 @@ public class Tuto : MonoBehaviour
                 {
                     dialogTxt[id].gameObject.SetActive(true);
                     id++;
+                    lastId = 0;
+
                     timer = 0;
                 }
             }
@@ -234,6 +255,8 @@ public class Tuto : MonoBehaviour
                 {
                     keyEnter.SetActive(false);
                     id = 0;
+                    lastId = 0;
+
                     clearDialog();
                     Write("If this future tree is not connected with a mushroom, it will be tired and you will lose health.");
                     tutoId = 14;
@@ -258,6 +281,8 @@ public class Tuto : MonoBehaviour
                 {
                     keyEnter.SetActive(false);
                     id = 0;
+                    lastId = 0;
+
                     clearDialog();
                     Write("Now go! And make a glorious forest!");
                     tutoId = 15;
@@ -284,6 +309,7 @@ public class Tuto : MonoBehaviour
                     HideTuto();
                 }
             }
+            
         }
     }
 
@@ -292,6 +318,8 @@ public class Tuto : MonoBehaviour
         keyEnter.SetActive(false);
         timer = 0;
         id = 0;
+        lastId = 0;
+
         clearDialog();
         Write("Good job! Now let's go underground. Click on this button or press Space.");
         arrow.GetComponent<SpriteRenderer>().flipY = true;
@@ -304,6 +332,8 @@ public class Tuto : MonoBehaviour
         keyEnter.SetActive(false);
         timer = 0;
         id = 0;
+        lastId = 0;
+
         clearDialog();
         Write("Nice! Now click on this button to get paths. Do it until we don't have anymore spore left!");
         arrow.GetComponent<SpriteRenderer>().flipY = false;
@@ -317,6 +347,8 @@ public class Tuto : MonoBehaviour
         keyEnter.SetActive(false);
         timer = 0;
         id = 0;
+        lastId = 0;
+
         clearDialog();
         Write("Great! Now click on this path.");
         NewPath np = FindObjectsOfType<NewPath>(true).ToList().Find(n => n.type == "line");
@@ -329,6 +361,8 @@ public class Tuto : MonoBehaviour
         keyEnter.SetActive(false);
         timer = 0;
         id = 0;
+        lastId = 0;
+
         clearDialog();
         targetTile.isTuto = true;
         Write("Rotate it by right clicking on it, then place it there to connect the mushroom and the tree.");
@@ -341,6 +375,8 @@ public class Tuto : MonoBehaviour
         keyEnter.SetActive(false);
         timer = 0;
         id = 0;
+        lastId = 0;
+
         clearDialog();
         Write("Yeah!! Connected!");
         arrow.SetActive(false);
@@ -352,6 +388,8 @@ public class Tuto : MonoBehaviour
         keyEnter.SetActive(false);
         timer = 0;
         id = 0;
+        lastId = 0;
+
         clearDialog();
         Write("Alright ! Our tree is starting to generate a seed, let's wait for it...");
         arrow.SetActive(false);
@@ -364,6 +402,8 @@ public class Tuto : MonoBehaviour
         keyEnter.SetActive(false);
         timer = 0;
         id = 0;
+        lastId = 0;
+
         clearDialog();
         Write("Here! the seed! You can click on it to grow a tree! But, be careful...");
         arrow.SetActive(false);
@@ -380,6 +420,8 @@ public class Tuto : MonoBehaviour
         {
             isTuto = true;
             tutoId = 0;
+            lastId = 0;
+
             Write("Hey! Welcome to the world of Trees and Shrooms!");
         } else
         {
