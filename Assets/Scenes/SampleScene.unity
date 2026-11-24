@@ -2450,7 +2450,7 @@ MonoBehaviour:
   arrow: {fileID: 906569988}
   targetTile: {fileID: 442634953}
   targetTreeTile: {fileID: 2144829329}
-  resetTuto: 1
+  resetTuto: 0
   isTuto: 0
   tutoId: 999
 --- !u!1 &412823299
@@ -3326,9 +3326,9 @@ Camera:
   m_NormalizedViewPortRect:
     serializedVersion: 2
     x: 0
-    y: 1.7777778
-    width: 1.415625
-    height: 1.415625
+    y: 0
+    width: 1
+    height: 1
   near clip plane: 0.3
   far clip plane: 1000
   field of view: 34

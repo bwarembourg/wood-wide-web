@@ -45,7 +45,13 @@ public class Spore : MonoBehaviour
 
     private void OnMouseDown()
     {
-        if (!GameMgt.current.gameOn() && Tuto.current.tutoId != 2)
+        Debug.Log("Onmousedown spore");
+        Debug.Log("gameon : " + GameMgt.current.gameOn());
+        Debug.Log("tuto active : " + Tuto.current.gameObject.activeSelf);
+        Debug.Log("tutoId : " + Tuto.current.tutoId);
+        Debug.Log("mode : " + OnOffSwitch.current.mode);
+
+        if (!GameMgt.current.gameOn() && (!Tuto.current.gameObject.activeSelf || Tuto.current.tutoId != 2))
             return;
         if (OnOffSwitch.current.mode == "outside")
         {

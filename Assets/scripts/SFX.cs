@@ -45,8 +45,8 @@ public class SFX : MonoBehaviour
             switch (id)
             {
                 case "TREE_GROWN": source.clip = treeGrown; break;
-                case "TO_OUTSIDE": source.volume = 0.5f;  source.clip = toOutside; break;
-                case "TO_UNDERGROUND": source.volume = 0.5f; source.clip = toUnderground; break;
+                case "TO_OUTSIDE": source.volume = 0.25f;  source.clip = toOutside; break;
+                case "TO_UNDERGROUND": source.volume = 0.25f; source.clip = toUnderground; break;
                 case "CLICK": source.clip = clic; break;
                 case "BUILD_PATH": source.clip = buildPath; break;
                 case "GET_SEED": source.clip = getSeed; break;
@@ -58,7 +58,7 @@ public class SFX : MonoBehaviour
                 case "DIAL": source.volume = 0.25f; source.clip = dial; break;
                 case "ANIMAL": source.clip = animal; break;
                 case "EATING": source.clip = eating; break;
-                default: source.clip = newSeed; break;
+                default: source.volume = 0.25f; source.clip = newSeed; break;
             }
             source.Play();
         }

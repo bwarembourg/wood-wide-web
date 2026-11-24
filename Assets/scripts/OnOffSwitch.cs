@@ -30,6 +30,7 @@ public class OnOffSwitch : MonoBehaviour
     {
         label = Font.current.WriteLine("OUTSIDE", 1f, -0.25f, transform);
         label.ForEach(l => l.color = new Color(0,0, 0));
+        Utils.current.getAllTiles().ForEach(t => t.GetComponent<BoxCollider2D>().enabled = false);
     }
 
     // Update is called once per frame
