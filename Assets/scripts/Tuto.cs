@@ -39,6 +39,7 @@ public class Tuto : MonoBehaviour
         {
             if (id - lastId >= 4)
             {
+                Debug.Log("id: " + id + "/" + lastId);
                 SFX.current.Play("DIAL");
                 lastId = id;
             }
@@ -62,7 +63,7 @@ public class Tuto : MonoBehaviour
                     id = 0;
                     lastId = 0;
                     clearDialog();
-                    Write("Your work, if you accept it, is to make a forest by spreading mushroom and trees. See this spore ?");
+                    Write("Your work, if you accept it, is to make a forest by spreading mushrooms and trees.");
                     tutoId = 1;
                 }
             }
@@ -85,12 +86,11 @@ public class Tuto : MonoBehaviour
                     keyEnter.SetActive(false);
                     id = 0;
                     lastId = 0;
-
                     clearDialog();
-                    Write("Click on it to catch it!");
+                    Write("See this spore ? Click on it to catch it!");
                     tutoId = 2;
                     arrow.SetActive(true);
-                    arrow.transform.position = FindObjectOfType<Spore>().transform.position + new Vector3(0, 0.5f, 0);
+                    arrow.transform.position = FindObjectOfType<Spore>().transform.position + new Vector3(0, 1.25f, 0);
                 }
             }
             else if (tutoId >= 2 && tutoId <= 6)
@@ -124,7 +124,7 @@ public class Tuto : MonoBehaviour
                     lastId = 0;
 
                     clearDialog();
-                    Write("You can also get mushrooms. Getting more mushroom will help securing the forest.");
+                    Write("You can also get mushrooms. Getting more mushrooms will help securing the forest.");
                     tutoId = 8;
                     arrow.SetActive(true);
                     arrow.transform.position = FindObjectsOfType<ShopItem>().ToList().Find(s => s.type == "mushroom").transform.position + new Vector3(0.75f, 0.5f, 0);
@@ -177,11 +177,11 @@ public class Tuto : MonoBehaviour
                     lastId = 0;
 
                     clearDialog();
-                    Write("If you have no more mushroom, your trees will be tired and you will lose health.");
+                    Write("If you no longer have mushrooms, your trees will be tired and you will lose health.");
                     tutoId = 10;
                     arrow.SetActive(true);
                     arrow.GetComponent<SpriteRenderer>().flipY = true;
-                    arrow.transform.position = FindObjectOfType<Life>().transform.position + new Vector3(1f, -1.25f, 0);
+                    arrow.transform.position = FindObjectOfType<Life>().transform.position + new Vector3(1f, -1.75f, 0);
                 }
             }
             else if (tutoId == 10)
@@ -205,11 +205,11 @@ public class Tuto : MonoBehaviour
                     lastId = 0;
 
                     clearDialog();
-                    Write("Now let's go back outside by clicking space or on the upper button.");
+                    Write("Now let's go back outside by pressing the space bar or on the upper button.");
                     tutoId = 11;
                     arrow.SetActive(true);
                     arrow.GetComponent<SpriteRenderer>().flipY = true;
-                    arrow.transform.position = FindObjectOfType<OnOffSwitch>().transform.position + new Vector3(3f, -1.25f, 0);
+                    arrow.transform.position = FindObjectOfType<OnOffSwitch>().transform.position + new Vector3(3f, -1.75f, 0);
                 }
             }
             else if (tutoId == 11)
@@ -219,8 +219,6 @@ public class Tuto : MonoBehaviour
                 {
                     dialogTxt[id].gameObject.SetActive(true);
                     id++;
-                    lastId = 0;
-
                     FindObjectOfType<Tree>().maxSeed = 5f;
                     timer = 0;
                 }
@@ -232,8 +230,6 @@ public class Tuto : MonoBehaviour
                 {
                     dialogTxt[id].gameObject.SetActive(true);
                     id++;
-                    lastId = 0;
-
                     timer = 0;
                 }
             }
@@ -286,7 +282,8 @@ public class Tuto : MonoBehaviour
                     clearDialog();
                     Write("Now go! And make a glorious forest!");
                     tutoId = 15;
-                    arrow.SetActive(false);                }
+                    arrow.SetActive(false);
+                }
             }
             else if (tutoId == 15)
             {
@@ -321,9 +318,9 @@ public class Tuto : MonoBehaviour
         lastId = 0;
 
         clearDialog();
-        Write("Good job! Now let's go underground. Click on this button or press Space.");
+        Write("Good job! You got some spores. Now let's go underground. Click on this button or press the space bar.");
         arrow.GetComponent<SpriteRenderer>().flipY = true;
-        arrow.transform.position = FindObjectOfType<OnOffSwitch>().transform.position + new Vector3(3f, -1.25f, 0);
+        arrow.transform.position = FindObjectOfType<OnOffSwitch>().transform.position + new Vector3(3f, -1.75f, 0);
         tutoId = 3;
     }
 
@@ -335,7 +332,7 @@ public class Tuto : MonoBehaviour
         lastId = 0;
 
         clearDialog();
-        Write("Nice! Now click on this button to get paths. Do it until we don't have anymore spore left!");
+        Write("Nice! You can use these spores to get paths. Click on this and get all the paths you can get!");
         arrow.GetComponent<SpriteRenderer>().flipY = false;
         ShopItem shop = FindObjectsOfType<ShopItem>(true).ToList().Find(shop => shop.type == "path");
         arrow.transform.position = shop.transform.position + new Vector3(0.75f, 0.5f, 0);
@@ -352,7 +349,7 @@ public class Tuto : MonoBehaviour
         clearDialog();
         Write("Great! Now click on this path.");
         NewPath np = FindObjectsOfType<NewPath>(true).ToList().Find(n => n.type == "line");
-        arrow.transform.position = np.transform.position + new Vector3(0, 0.75f, 0);
+        arrow.transform.position = np.transform.position + new Vector3(0, 1.5f, 0);
         tutoId = 5;
     }
 
@@ -366,7 +363,7 @@ public class Tuto : MonoBehaviour
         clearDialog();
         targetTile.isTuto = true;
         Write("Rotate it by right clicking on it, then place it there to connect the mushroom and the tree.");
-        arrow.transform.position = targetTile.transform.position + new Vector3(0, 0.75f, 0);
+        arrow.transform.position = targetTile.transform.position + new Vector3(0, 1.25f, 0);
         tutoId = 6;
     }
 
@@ -391,7 +388,7 @@ public class Tuto : MonoBehaviour
         lastId = 0;
 
         clearDialog();
-        Write("Alright ! Our tree is starting to generate a seed, let's wait for it...");
+        Write("Alright! Our tree is starting to generate a seed, let's wait for it...");
         arrow.SetActive(false);
         tutoId = 12;
     }

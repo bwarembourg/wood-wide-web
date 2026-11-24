@@ -69,7 +69,9 @@ public class GameMgt : MonoBehaviour
     public void UpdateAllTiles()
     {
         List<Tile> aliveTiles = Utils.current.GetAllAliveTiles();
-        aliveTiles.ForEach(tile => tile.UpdateIsConnected());
+        aliveTiles.ForEach(t => t.isConnected = false);
+        aliveTiles.FindAll(m => m.isMushroom).ForEach(tile => tile.UpdateMushroomConnected());
+        aliveTiles.ForEach(t => t.UpdateIsConnected());
         syncAnims();
     }
 

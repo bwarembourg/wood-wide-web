@@ -63,7 +63,7 @@ public class Tree : MonoBehaviour
                 progressBar.gameObject.SetActive(false);
                 growing = false;
                 GetComponent<Animator>().SetTrigger("grown");
-                tile.UpdateIsConnected();
+                GameMgt.current.UpdateAllTiles();
                 if (tile.isConnected)
                 {
                     SFX.current.Play("TREE_GROWN");
@@ -102,16 +102,16 @@ public class Tree : MonoBehaviour
 
     public void InitConnected()
     {
-        Debug.Log("init connected");
         timerDying = 0;
         timerGrowing = 0;
-        if (!growing)
+        dyingProgressBar.gameObject.SetActive(false);
+
+        if (!growing && !hasSeed)
         {
             isFirst = false;
             growing = false;
             dying = false;
             working = true;
-            dyingProgressBar.gameObject.SetActive(false);
             progressBar.transform.localPosition = new Vector3(0, 0.5625f + 0.75f, 0);
             progressBar.gameObject.SetActive(true);
         }

@@ -42,12 +42,15 @@ public class Tile : MonoBehaviour
         
     }
 
+    public void UpdateMushroomConnected()
+    {
+        UpdateConnected(new PathState(false, false, false));
+
+    }
 
     public void UpdateIsConnected()
     {
-        PathState ps = IsConnected(new PathState(false, false, false));
-        isConnected = ps.connected;
-        path.SetBool("on", ps.connected);
+        path.SetBool("on", isConnected);
         GameMgt.current.syncAnims();
         if (isTree && isConnected)
         {
@@ -197,8 +200,8 @@ public class Tile : MonoBehaviour
         Score.current.addShroom();
         if (OnOffSwitch.current.mode == "underground")
         {
-            SpriteRenderer treeSr = tree.GetComponent<SpriteRenderer>();
-            treeSr.color = new Color(1f, 1f, 1f, OnOffSwitch.current.targetAlpha);
+            SpriteRenderer mushSr = mushroom.GetComponent<SpriteRenderer>();
+            mushSr.color = new Color(1f, 1f, 1f, OnOffSwitch.current.targetAlpha);
             progressBar.UpdateUnderground();
         }
         path.SetTrigger("cross");
@@ -268,13 +271,13 @@ public class Tile : MonoBehaviour
         GameMgt.current.UpdateAllTiles();
     }
 
-    public PathState IsConnected(PathState pathState)
+    PathState UpdateConnected(PathState pathState)
     {
-        PathState newPathState = pathState;
         if (isMushroom)
         {
-            return new PathState(true, true, true);
+            isConnected = true;
         }
+        PathState newPathState = pathState;
         List<Tile> tiles = GetTilesAround();
         tiles = tiles.FindAll(t => newPathState.tilesDone.Find(td => td == t) == null);
         if (conRight)
@@ -282,8 +285,9 @@ public class Tile : MonoBehaviour
             Tile rightTile = tiles.Find(tile => transform.position.x < tile.transform.position.x);
             if (rightTile != null && rightTile.conLeft)
             {
+                rightTile.isConnected = true;
                 newPathState.tilesDone.Add(this);
-                newPathState = rightTile.IsConnected(newPathState);
+                newPathState = rightTile.UpdateConnected(newPathState);
             }
         }
         if (conLeft)
@@ -291,8 +295,9 @@ public class Tile : MonoBehaviour
             Tile leftTile = tiles.Find(tile => transform.position.x > tile.transform.position.x);
             if (leftTile != null && leftTile.conRight)
             {
+                leftTile.isConnected = true;
                 newPathState.tilesDone.Add(this);
-                newPathState = leftTile.IsConnected(newPathState);
+                newPathState = leftTile.UpdateConnected(newPathState);
             }
         }
         if (conTop)
@@ -300,8 +305,9 @@ public class Tile : MonoBehaviour
             Tile topTile = tiles.Find(tile => transform.position.y < tile.transform.position.y);
             if (topTile != null && topTile.conBottom)
             {
+                topTile.isConnected = true;
                 newPathState.tilesDone.Add(this);
-                newPathState = topTile.IsConnected(newPathState);
+                newPathState = topTile.UpdateConnected(newPathState);
             }
         }
         if (conBottom)
@@ -309,8 +315,9 @@ public class Tile : MonoBehaviour
             Tile bottomTile = tiles.Find(tile => transform.position.y > tile.transform.position.y);
             if (bottomTile != null && bottomTile.conTop)
             {
+                bottomTile.isConnected = true;
                 newPathState.tilesDone.Add(this);
-                newPathState = bottomTile.IsConnected(newPathState);
+                newPathState = bottomTile.UpdateConnected(newPathState);
             }
         }
         return newPathState;
